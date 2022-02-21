@@ -8,8 +8,17 @@
         <li>Partenza <br>{{ $train -> departure_station }} - {{ $train -> departure_time }}</li>
         <li>Arrivo<br>{{ $train -> arrival_station }} - {{ $train -> arrival_time }}</li>
         <li>{{ $train -> train_code }} - N Carrozze: {{ $train -> train_carriage }}</li>
-        <li>{{ ($train -> in_time) ? 'In orario' : 'In ritardo' }}</li>
-        <li>{{ ($train -> deleted) ? 'Cancellato' : ''  }}</li>
+        @php
+            $response = '';
+            if($train -> deleted) {
+                $response = 'Cancellato';
+            } elseif (!$train -> deleted && !$train -> in_time) {
+                $response = 'In ritardo';
+            } else {
+                $response = 'In orario';
+            }
+        @endphp
+        <li>{{ $response  }}</li>
     </ul>
 @endforeach
 </div>
