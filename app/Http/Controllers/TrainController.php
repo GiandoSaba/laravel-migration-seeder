@@ -9,8 +9,13 @@ class TrainController extends Controller
 {
     public function index()
     {
-        $trains = Trains::all();
+        $trains = Trains::paginate(10);
         $data = ['trains' => $trains];
-        return view('home', $data);
+        return view('trains.home', $data);
+    }
+
+    public function show(Trains $train) //findOrFail
+    {
+        return view('trains.show', compact('train'));
     }
 }
